@@ -1,16 +1,21 @@
-import Page1 from "./components/Page1.jsx";
-import Page2 from "./components/Page2.jsx";
+// src/App.jsx
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
+import Login from "./components/Login";
+import Home from "./components/Home";
+import Callback from "./components/Callback";
 
+function App() {
+  const { isAuthenticated } = useAuth0();
 
-export default function App() {
-    return (
-        <>
-            <Page1 />
-            <Page2 />
-
-
-        </>
-    )
+  return (
+    <Router>
+      <Routes>
+        <Route path="/callback" element={<Callback />} />
+        <Route path="/" element={isAuthenticated ? <Home /> : <Login />} />
+      </Routes>
+    </Router>
+  );
 }
 
-
+export default App;
